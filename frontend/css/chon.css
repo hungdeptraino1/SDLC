@@ -1,0 +1,16 @@
+.blinking{
+    animation:blinkingText 2s infinite;
+    font-size: 200px;
+}
+@keyframes blinkingText{
+    0%{     color: #e00000;    }
+    20%{    color: #5eff00; }
+    30%{    color: #00f7ff;    }
+    40%{    color: #00d7ff;    }
+    50%{    color: #00a7ff;    }    
+    60%{    color: purple; }
+    70%{    color: #ff00f7;    }
+    80%{    color:orange;  }
+    90%{    color: #ff00f7;    }
+    100%{   color: #4400fd;    }
+}
