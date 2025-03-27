@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: admin_user.php");
         exit();
     } else {
-        $error = "Lỗi khi cập nhật người dùng.";
+        $error = "Error updating user.";
     }
 }
 ?>
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chỉnh sửa người dùng</title>
+    <title>Edit Users</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../frontend/css/style.css">
 </head>
@@ -58,9 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Admin Panel</a>
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="logout.php">Đăng xuất</a></li>
-            <li class="nav-item"><a class="nav-link" href="index.php">Xem website</a></li>
-            <li class="nav-item"><a class="nav-link" href="admin.php">Quản lý sản phẩm</a></li>
+            <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php">View website</a></li>
+            <li class="nav-item"><a class="nav-link" href="admin.php">Products Manager</a></li>
         </ul>
     </nav>
 
@@ -69,11 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php if (isset($error)) echo "<p class='text-danger'>$error</p>"; ?>
         <form method="POST">
             <div class="mb-3">
-                <label for="username" class="form-label">Tên đăng nhập</label>
+                <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
             </div>
             <div class="mb-3">
-                <label for="full_name" class="form-label">Họ tên</label>
+                <label for="full_name" class="form-label">Full Name</label>
                 <input type="text" class="form-control" id="full_name" name="full_name" value="<?php echo htmlspecialchars($user['full_name']); ?>" required>
             </div>
             <div class="mb-3">
@@ -81,22 +81,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
             </div>
             <div class="mb-3">
-                <label for="phone" class="form-label">Số điện thoại</label>
+                <label for="phone" class="form-label">Phone Number</label>
                 <input type="text" class="form-control" id="phone" name="phone" value="<?php echo htmlspecialchars($user['phone'] ?? ''); ?>">
             </div>
             <div class="mb-3">
-                <label for="address" class="form-label">Địa chỉ</label>
+                <label for="address" class="form-label">Address</label>
                 <textarea class="form-control" id="address" name="address"><?php echo htmlspecialchars($user['address'] ?? ''); ?></textarea>
             </div>
             <div class="mb-3">
-                <label for="role" class="form-label">Vai trò</label>
+                <label for="role" class="form-label">Role</label>
                 <select class="form-control" id="role" name="role" required>
-                    <option value="customer" <?php echo $user['role'] === 'customer' ? 'selected' : ''; ?>>Khách hàng</option>
-                    <option value="admin" <?php echo $user['role'] === 'admin' ? 'selected' : ''; ?>>Quản trị viên</option>
+                    <option value="customer" <?php echo $user['role'] === 'customer' ? 'selected' : ''; ?>>Customer</option>
+                    <option value="admin" <?php echo $user['role'] === 'admin' ? 'selected' : ''; ?>>Admin</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-            <a href="admin_user.php" class="btn btn-secondary">Hủy</a>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="admin_user.php" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 

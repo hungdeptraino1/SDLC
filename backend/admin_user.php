@@ -36,9 +36,9 @@ $result = $stmt->get_result();
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="admin.php">Quản lý Sản phẩm</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.php">Xem Website</a></li>
-                    <li class="nav-item"><a class="nav-link" href="logout.php">Đăng xuất</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin.php">Products Manager</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php">View Website</a></li>
+                    <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -47,26 +47,26 @@ $result = $stmt->get_result();
     <!-- Nội dung chính -->
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="fas fa-users me-2"></i> Quản lý Người Dùng</h2>
-            <a href="add_user.php" class="btn btn-primary btn-custom"><i class="fas fa-user-plus"></i> Thêm Người Dùng</a>
+            <h2><i class="fas fa-users me-2"></i> Users Manager</h2>
+            <a href="add_user.php" class="btn btn-primary btn-custom"><i class="fas fa-user-plus"></i>Add User</a>
         </div>
 
         <?php if ($result->num_rows === 0): ?>
-            <div class="alert alert-info text-center">Chưa có người dùng nào trong hệ thống!</div>
+            <div class="alert alert-info text-center">There are no users in the system yet!</div>
         <?php else: ?>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Tên đăng nhập</th>
-                            <th>Họ tên</th>
+                            <th>Username</th>
+                            <th>Full Name</th>
                             <th>Email</th>
-                            <th>Địa chỉ</th>
-                            <th>Số điện thoại</th>
-                            <th>Vai trò</th>
-                            <th>Ngày tạo</th>
-                            <th>Hành động</th>
+                            <th>Address</th>
+                            <th>Phone Number</th>
+                            <th>Role</th>
+                            <th>Created Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,10 +86,10 @@ $result = $stmt->get_result();
                                 <td><?php echo htmlspecialchars($row['created_at']); ?></td>
                                 <td>
                                     <a href="edit_user.php?id=<?php echo $row['user_id']; ?>" class="btn btn-warning btn-sm btn-custom">
-                                        <i class="fas fa-edit"></i> Sửa
+                                        <i class="fas fa-edit"></i> Edit
                                     </a>
-                                    <a href="delete_user.php?id=<?php echo $row['user_id']; ?>" class="btn btn-danger btn-sm btn-custom" onclick="return confirm('Bạn có chắc muốn xóa người dùng này?')">
-                                        <i class="fas fa-trash"></i> Xóa
+                                    <a href="delete_user.php?id=<?php echo $row['user_id']; ?>" class="btn btn-danger btn-sm btn-custom" onclick="return confirm('Are you sure you want to delete this user?')">
+                                        <i class="fas fa-trash"></i> Delete
                                     </a>
                                 </td>
                             </tr>

@@ -16,7 +16,7 @@ if (isset($_SESSION['user_id'])) {
         $cart_count = $stmt->get_result()->fetch_assoc()['total'] ?? 0;
         $stmt->close();
     } else {
-        error_log("Lỗi chuẩn bị truy vấn cart: " . $conn->error);
+        error_log("Error preparing cart query: " . $conn->error);
     }
 }
 
@@ -28,7 +28,7 @@ if ($categories_query) {
         $categories[$row['category_id']] = $row['name'];
     }
 } else {
-    error_log("Lỗi truy vấn categories: " . $conn->error);
+    error_log("Error querying categories: " . $conn->error);
 }
 
 // Lấy danh sách sản phẩm
@@ -48,7 +48,7 @@ if ($products_query) {
     }
     $products_query->close();
 } else {
-    error_log("Lỗi chuẩn bị truy vấn products: " . $conn->error);
+    error_log("Error preparing query products: " . $conn->error);
 }
 ?>
 
@@ -76,7 +76,7 @@ if ($products_query) {
                     </button>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/index.php">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item">
@@ -87,10 +87,10 @@ if ($products_query) {
                     </li>
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="admin.php">Product Manager</a>
+                            <a class="nav-link" href="admin.php">Products Manager</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="admin_user.php">User Manager</a>
+                            <a class="nav-link" href="admin_user.php">Users Manager</a>
                         </li>
                     <?php endif; ?>
                 <?php else: ?>

@@ -20,14 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Kiểm tra các trường bắt buộc
     if (empty($username) || empty($email) || empty($password) || !in_array($role, ['user', 'admin'])) {
-        $error = "Vui lòng điền đầy đủ thông tin và chọn vai trò hợp lệ!";
+        $error = "Please fill in the information completely and select a valid role!";
     } else {
         // Kiểm tra username hoặc email đã tồn tại chưa
         $stmt = $conn->prepare("SELECT user_id FROM users WHERE username = ? OR email = ?");
         $stmt->bind_param("ss", $username, $email);
         $stmt->execute();
         if ($stmt->get_result()->num_rows > 0) {
-            $error = "Tên đăng nhập hoặc email đã được sử dụng!";
+            $error = "Username or email already in use!";
         } else {
             // Thêm người dùng mới
             $stmt = $conn->prepare("
@@ -36,11 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ");
             $stmt->bind_param("sssssss", $username, $full_name, $email, $address, $phone, $password, $role);
             if ($stmt->execute()) {
-                $success = "Thêm người dùng thành công!";
+                $success = "User added successfully!";
                 header("Location: admin_users.php"); // Chuyển hướng về trang quản lý sau khi thêm thành công
                 exit();
             } else {
-                $error = "Đã xảy ra lỗi khi thêm người dùng!";
+                $error = "An error occurred while adding the user.!";
             }
         }
     }
@@ -111,10 +111,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="admin.php">Quản lý Sản phẩm</a></li>
-                    <li class="nav-item"><a class="nav-link" href="admin_users.php">Quản lý Người Dùng</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.php">Xem Website</a></li>
-                    <li class="nav-item"><a class="nav-link" href="logout.php">Đăng xuất</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin.php">Products Manager</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin_users.php">Users Manager</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php">View Website</a></li>
+                    <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Nội dung chính -->
     <div class="container">
-        <h2><i class="fas fa-user-plus me-2"></i> Thêm Người Dùng Mới</h2>
+        <h2><i class="fas fa-user-plus me-2"></i> Add New User</h2>
 
         <!-- Hiển thị thông báo -->
         <?php if (isset($error)): ?>
@@ -135,44 +135,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <!-- Form thêm người dùng -->
         <form method="POST" class="needs-validation" novalidate>
             <div class="mb-3">
-                <label for="username" class="form-label">Tên đăng nhập <span class="text-danger">*</span></label>
+                <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="username" name="username" required>
-                <div class="invalid-feedback">Vui lòng nhập tên đăng nhập!</div>
+                <div class="invalid-feedback">Please enter username!</div>
             </div>
             <div class="mb-3">
-                <label for="full_name" class="form-label">Họ tên</label>
+                <label for="full_name" class="form-label">Full name</label>
                 <input type="text" class="form-control" id="full_name" name="full_name">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                 <input type="email" class="form-control" id="email" name="email" required>
-                <div class="invalid-feedback">Vui lòng nhập email hợp lệ!</div>
+                <div class="invalid-feedback">Please enter a valid email!</div>
             </div>
             <div class="mb-3">
-                <label for="address" class="form-label">Địa chỉ</label>
+                <label for="address" class="form-label">Address</label>
                 <input type="text" class="form-control" id="address" name="address">
             </div>
             <div class="mb-3">
-                <label for="phone" class="form-label">Số điện thoại</label>
+                <label for="phone" class="form-label">Phone Number</label>
                 <input type="text" class="form-control" id="phone" name="phone">
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Mật khẩu <span class="text-danger">*</span></label>
+                <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
                 <input type="password" class="form-control" id="password" name="password" required>
-                <div class="invalid-feedback">Vui lòng nhập mật khẩu!</div>
+                <div class="invalid-feedback">Please enter password!</div>
             </div>
             <div class="mb-3">
-                <label for="role" class="form-label">Vai trò <span class="text-danger">*</span></label>
+                <label for="role" class="form-label">Role <span class="text-danger">*</span></label>
                 <select class="form-select" id="role" name="role" required>
-                    <option value="">Chọn vai trò</option>
-                    <option value="user">Người dùng</option>
-                    <option value="admin">Quản trị viên</option>
+                    <option value="">Select role</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
                 </select>
-                <div class="invalid-feedback">Vui lòng chọn vai trò!</div>
+                <div class="invalid-feedback">VPlease select role!</div>
             </div>
             <div class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary btn-custom"><i class="fas fa-save"></i> Lưu</button>
-                <a href="admin_user.php" class="btn btn-secondary btn-custom"><i class="fas fa-arrow-left"></i> Quay lại</a>
+                <button type="submit" class="btn btn-primary btn-custom"><i class="fas fa-save"></i> Save</button>
+                <a href="admin_user.php" class="btn btn-secondary btn-custom"><i class="fas fa-arrow-left"></i> Back</a>
             </div>
         </form>
     </div>

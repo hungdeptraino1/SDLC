@@ -96,17 +96,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.php">Trang chủ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="cart.php">Giỏ hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.php">Cart</a></li>
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <li class="nav-item"><a class="nav-link" href="user.php">Tài khoản</a></li>
+                        <li class="nav-item"><a class="nav-link" href="user.php">Account</a></li>
                         <?php if ($_SESSION['role'] === 'admin'): ?>
-                            <li class="nav-item"><a class="nav-link" href="admin.php">Quản lý</a></li>
+                            <li class="nav-item"><a class="nav-link" href="admin.php">Product Manager</a></li>
                         <?php endif; ?>
-                        <li class="nav-item"><a class="nav-link" href="logout.php">Đăng xuất</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
                     <?php else: ?>
-                        <li class="nav-item"><a class="nav-link" href="login.php">Đăng nhập</a></li>
-                        <li class="nav-item"><a class="nav-link" href="register.php">Đăng ký</a></li>
+                        <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="register.php">Sign Up</a></li>
                     <?php endif; ?>
                 </ul>
             </div>
@@ -118,37 +118,37 @@
                 <!-- Thông tin thanh toán -->
                 <div class="col-md-6">
                     <form id="checkout-form" class="p-4 border rounded bg-light">
-                        <h3 class="mb-4">Thông tin thanh toán</h3>
+                        <h3 class="mb-4">Purchase Detail</h3>
                         <div class="mb-3">
-                            <label for="shipping_address" class="form-label">Địa chỉ giao hàng</label>
+                            <label for="shipping_address" class="form-label">Shipping Address</label>
                             <input type="text" class="form-control" id="shipping_address" name="shipping_address" required>
                         </div>
                         <div class="mb-3">
-                            <label for="payment_method" class="form-label">Phương thức thanh toán</label>
+                            <label for="payment_method" class="form-label">Payment Method</label>
                             <select class="form-select" id="payment_method" name="payment_method">
-                                <option value="credit_card">Thẻ tín dụng</option>
-                                <option value="e_wallet">Ví điện tử</option>
-                                <option value="bank_transfer" selected>Chuyển khoản</option>
+                                <option value="credit_card">Credit Card</option>
+                                <option value="e_wallet">E-Wallet</option>
+                                <option value="bank_transfer" selected>Transfer</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-success w-100">Thanh toán</button>
+                        <button type="submit" class="btn btn-success w-100">Purchase</button>
                     </form>
                 </div>
 
                 <!-- Tóm tắt giỏ hàng -->
                 <div class="col-md-6">
                     <div id="cart-summary" class="p-4 border rounded bg-light">
-                        <h3 class="mb-4">Tóm tắt giỏ hàng</h3>
+                        <h3 class="mb-4">Cart Summary</h3>
                         <?php if (empty($cart_items)): ?>
-                            <p class="text-center">Giỏ hàng của bạn đang trống!</p>
+                            <p class="text-center">Your cart is empty!</p>
                         <?php else: ?>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Sản phẩm</th>
-                                        <th>Giá</th>
-                                        <th>Số lượng</th>
-                                        <th>Tổng</th>
+                                        <th>Products</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -163,7 +163,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="3" class="text-end">Tổng cộng:</th>
+                                        <th colspan="3" class="text-end">Total Price:</th>
                                         <th><?php echo number_format($total_amount, 0, ',', '.'); ?> VNĐ</th>
                                     </tr>
                                 </tfoot>
@@ -194,12 +194,12 @@
                         width: 200,
                         height: 200
                     });
-                    if (confirm(`Tổng tiền: ${data.total_amount} VNĐ\nMã đơn: ${data.order_id}\nXác nhận thanh toán?`)) {
-                        alert("Thanh toán thành công!");
+                    if (confirm(`Total Price: ${data.total_amount} VNĐ\nOrder ID: ${data.order_id}\nPayment Confirm?`)) {
+                        alert("Payment successful!");
                         window.location.href = "index.php";
                     }
                 }, 'json').fail(function() {
-                    alert('Đã xảy ra lỗi khi xử lý thanh toán!');
+                    alert('An error occurred while processing payment.!');
                 });
             });
         });

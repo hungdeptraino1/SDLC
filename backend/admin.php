@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_product'])) {
     $category_id = filter_var($_POST['category_id'], FILTER_VALIDATE_INT) ?: NULL;
 
     if ($price === false || $stock === false) {
-        $error = "Giá hoặc số lượng không hợp lệ!";
+        $error = "Invalid price or quantity!";
     } else {
         $image = '';
         if ($_FILES['image']['name']) {
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_product'])) {
     $category_id = filter_var($_POST['category_id'], FILTER_VALIDATE_INT) ?: NULL;
 
     if ($product_id === false || $price === false || $stock === false) {
-        $error = "Thông tin không hợp lệ!";
+        $error = "Invalid information!";
     } else {
         $image = $_POST['current_image']; // Giữ ảnh cũ nếu không upload ảnh mới
         if ($_FILES['image']['name']) {
@@ -109,9 +109,9 @@ if (isset($_GET['edit_product'])) {
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Admin Panel</a>
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="logout.php">Đăng xuất</a></li>
-            <li class="nav-item"><a class="nav-link" href="index.php">Xem website</a></li>
-            <li class="nav-item"><a class="nav-link" href="admin_user.php">Quản lý người dùng</a></li>
+            <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.php">View website</a></li>
+            <li class="nav-item"><a class="nav-link" href="admin_user.php">User Manager</a></li>
         </ul>
     </nav>
     <div class="container mt-4">
@@ -119,7 +119,7 @@ if (isset($_GET['edit_product'])) {
 
         <!-- Form thêm/sửa sản phẩm -->
         <form method="POST" enctype="multipart/form-data" class="mb-4">
-            <h3><?php echo $edit_product ? 'Sửa sản phẩm' : 'Thêm sản phẩm mới'; ?></h3>
+            <h3><?php echo $edit_product ? 'Edit Product' : 'Add New Product'; ?></h3>
             <?php if (isset($error)): ?>
                 <div class="alert alert-danger"><?php echo $error; ?></div>
             <?php endif; ?>
@@ -128,25 +128,25 @@ if (isset($_GET['edit_product'])) {
                 <input type="hidden" name="current_image" value="<?php echo $edit_product['image']; ?>">
             <?php endif; ?>
             <div class="form-group">
-                <label for="name">Tên sản phẩm</label>
+                <label for="name">Product Name</label>
                 <input type="text" class="form-control" name="name" value="<?php echo $edit_product['name'] ?? ''; ?>" required>
             </div>
             <div class="form-group">
-                <label for="description">Mô tả</label>
+                <label for="description">Description</label>
                 <textarea class="form-control" name="description"><?php echo $edit_product['description'] ?? ''; ?></textarea>
             </div>
             <div class="form-group">
-                <label for="price">Giá</label>
+                <label for="price">Price</label>
                 <input type="number" class="form-control" name="price" step="0.01" value="<?php echo $edit_product['price'] ?? ''; ?>" required>
             </div>
             <div class="form-group">
-                <label for="stock">Số lượng trong kho</label>
+                <label for="stock">Quantity in stock</label>
                 <input type="number" class="form-control" name="stock" value="<?php echo $edit_product['stock'] ?? ''; ?>" required>
             </div>
             <div class="form-group">
-                <label for="category_id">Danh mục</label>
+                <label for="category_id">Categories</label>
                 <select class="form-control" name="category_id">
-                    <option value="">Không có danh mục</option>
+                    <option value="">No Category</option>
                     <?php while ($cat = $categories->fetch_assoc()): ?>
                         <option value="<?php echo $cat['category_id']; ?>" <?php echo ($edit_product && $edit_product['category_id'] == $cat['category_id']) ? 'selected' : ''; ?>>
                             <?php echo htmlspecialchars($cat['name']); ?>
@@ -155,32 +155,32 @@ if (isset($_GET['edit_product'])) {
                 </select>
             </div>
             <div class="form-group">
-                <label for="image">Hình ảnh</label>
+                <label for="image">Picture</label>
                 <input type="file" class="form-control-file" name="image">
                 <?php if ($edit_product && $edit_product['image']): ?>
-                    <p>Hình ảnh hiện tại: <img src="/uploads/<?php echo htmlspecialchars($edit_product['image']); ?>" width="50"></p>
+                    <p>Current image: <img src="/uploads/<?php echo htmlspecialchars($edit_product['image']); ?>" width="50"></p>
                 <?php endif; ?>
             </div>
             <button type="submit" name="<?php echo $edit_product ? 'edit_product' : 'add_product'; ?>" class="btn btn-primary">
-                <?php echo $edit_product ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm'; ?>
+                <?php echo $edit_product ? 'Edit Product' : 'Add Product'; ?>
             </button>
             <?php if ($edit_product): ?>
-                <a href="admin.php" class="btn btn-secondary">Hủy sửa</a>
+                <a href="admin.php" class="btn btn-secondary">Cancel Edit</a>
             <?php endif; ?>
         </form>
 
         <!-- Danh sách sản phẩm -->
-        <h3>Danh sách sản phẩm</h3>
+        <h3>Product List</h3>
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Tên</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
-                    <th>Danh mục</th>
-                    <th>Hình ảnh</th>
-                    <th>Hành động</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Category</th>
+                    <th>Picture</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -193,8 +193,8 @@ if (isset($_GET['edit_product'])) {
                         <td><?php echo htmlspecialchars($product['category_name'] ?? 'Không có'); ?></td>
                         <td><img src="/uploads/<?php echo htmlspecialchars($product['image'] ?? 'default.png'); ?>" width="50"></td>
                         <td>
-                            <a href="?edit_product=<?php echo $product['product_id']; ?>" class="btn btn-warning btn-sm">Sửa</a>
-                            <a href="?delete_product=<?php echo $product['product_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa sản phẩm này?');">Xóa</a>
+                            <a href="?edit_product=<?php echo $product['product_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="?delete_product=<?php echo $product['product_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Delete this product?');">Delete</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -204,27 +204,27 @@ if (isset($_GET['edit_product'])) {
         <!-- Form thêm danh mục -->
         <h1>Category Manager</h1>
         <form method="POST" class="mb-4">
-            <h3>Thêm danh mục mới</h3>
+            <h3>New Category</h3>
             <div class="form-group">
-                <label for="category_name">Tên danh mục</label>
+                <label for="category_name">Category Name</label>
                 <input type="text" class="form-control" name="category_name" required>
             </div>
             <div class="form-group">
-                <label for="category_description">Mô tả</label>
+                <label for="category_description">Description</label>
                 <textarea class="form-control" name="category_description"></textarea>
             </div>
-            <button type="submit" name="add_category" class="btn btn-primary">Thêm danh mục</button>
+            <button type="submit" name="add_category" class="btn btn-primary">Add Category</button>
         </form>
 
         <!-- Danh sách danh mục -->
-        <h3>Danh sách danh mục</h3>
+        <h3>Category List</h3>
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Tên</th>
-                    <th>Mô tả</th>
-                    <th>Hành động</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -232,9 +232,9 @@ if (isset($_GET['edit_product'])) {
                     <tr>
                         <td><?php echo $category['category_id']; ?></td>
                         <td><?php echo htmlspecialchars($category['name']); ?></td>
-                        <td><?php echo htmlspecialchars($category['description'] ?? 'Không có'); ?></td>
+                        <td><?php echo htmlspecialchars($category['description'] ?? 'N/A'); ?></td>
                         <td>
-                            <a href="?delete_category=<?php echo $category['category_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa danh mục này?');">Xóa</a>
+                            <a href="?delete_category=<?php echo $category['category_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Delete this category?');">Delete</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>

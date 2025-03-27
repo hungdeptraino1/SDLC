@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: index.php"); // Cả hai file trong /backend
             exit();
         } else {
-            $error = "Sai mật khẩu!";
+            $error = "Wrong password!";
         }
     } else {
-        $error = "Tài khoản không tồn tại!";
+        $error = "Account does not exist!";
     }
 }
 ?>

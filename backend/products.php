@@ -106,8 +106,8 @@ if (isset($_SESSION['user_id'])) {
                                             <?php echo htmlspecialchars($product['price']); ?> VNĐ<br>
                                             <small>Category: <?php echo htmlspecialchars($product['category_name'] ?? 'N/A'); ?></small>
                                         </p>
-                                        <button class="btn btn-success add-to-cart" data-product-id="<?php echo $product['product_id']; ?>">Thêm vào giỏ</button>
-                                        <a href="product_detail.php?product_id=<?php echo $product['product_id']; ?>" class="btn btn-info">Xem chi tiết</a>
+                                        <button class="btn btn-success add-to-cart" data-product-id="<?php echo $product['product_id']; ?>">Add To Cart</button>
+                                        <a href="product_detail.php?product_id=<?php echo $product['product_id']; ?>" class="btn btn-info">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -137,14 +137,14 @@ if (isset($_SESSION['user_id'])) {
                         if (data.status === 'success') {
                             cartCount++;
                             document.getElementById('cart-count').innerText = cartCount;
-                            alert('Sản phẩm đã được thêm vào giỏ hàng!');
+                            alert('Product has been added to cart!');
                         } else {
                             alert(data.message);
                         }
                     })
                     .catch(error => console.error('Error:', error));
                 <?php else: ?>
-                    alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ!');
+                    alert('Please login to add products to cart!');
                     window.location.href = 'login.php';
                 <?php endif; ?>
             });
