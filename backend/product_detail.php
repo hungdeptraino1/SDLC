@@ -138,7 +138,7 @@ if (!$product) {
                 <h1><?php echo htmlspecialchars($product['name']); ?></h1>
                 <p class="price"><?php echo number_format($product['price'], 0, ',', '.'); ?> VNĐ</p>
                 <p class="stock">Quantity stock: <?php echo htmlspecialchars($product['stock']); ?></p>
-                <p class="category">Categories: <?php echo htmlspecialchars($product['category_name'] ?? 'Không có'); ?></p>
+                <p class="category">Category: <?php echo htmlspecialchars($product['category_name'] ?? 'Không có'); ?></p>
                 <p class="description"><?php echo htmlspecialchars($product['description'] ?? 'Không có mô tả.'); ?></p>
                 
                 <!-- Form thêm vào giỏ -->
