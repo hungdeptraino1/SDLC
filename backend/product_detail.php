@@ -145,7 +145,7 @@ if (!$product) {
                 <form id="add-to-cart-form" class="d-flex align-items-center">
                     <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
                     <div class="me-3">
-                        <label for="quantity" class="form-label">Stock:</label>
+                        <label for="quantity" class="form-label">Quantity:</label>
                         <input type="number" class="form-control" id="quantity" name="quantity" min="1" max="<?php echo $product['stock']; ?>" value="1" style="width: 100px;">
                     </div>
                     <button type="submit" class="btn btn-primary btn-custom" <?php echo $product['stock'] <= 0 ? 'disabled' : ''; ?>>
